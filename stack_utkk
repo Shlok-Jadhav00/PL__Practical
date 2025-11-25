@@ -1,0 +1,113 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+bool isOperator(char c){
+	return (c=='/' || c=='*' || c=='-' || c=='+' || c=='^');
+}
+
+string PrefixtoInfix(string prefix){
+	stack<string> st;
+	for (int i=prefix.length()-1;i>=0;i--){
+		char c=prefix[i];
+		
+		if(isOperator(c)){
+			string op1=st.top();st.pop();
+			string op2=st.top();st.pop();
+			string temp="("+op1+c+op2+")";
+			st.push(temp);
+		}
+		else {
+			st.push(string(1,c);
+		
+		}
+	}
+	return st.top();
+	}
+	
+	
+
+int precedence(char c){
+	if (c=='^')
+	return 3;
+	if (c=='*'|| c=='/')
+	return 2;
+	if (c=='+'|| c=='-')
+	return 1;
+	return 0;
+}
+
+string InfixtoPostfix(string Infix){
+	stack<char> st;
+	string output="";
+	
+	for(int i=0;i<Infix.length();i++){
+		char c=Infix[i];
+		if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')){
+			output+=c;
+		}
+		else if (c=='('){
+			st.push(c);
+		}
+		else if (c==')'){
+			while (!st.empty() && st.top()!='('){
+				output+=st.top();
+				st.pop();
+			}
+			st.pop();
+		}
+		else {
+			while (!st.empty() && precedence(st.top()) >= precedence(c)){
+				if(st.top()=='(') break;
+				output+=st.top();
+				st.pop();
+			}
+			st.push(c);
+		}
+}
+while(!st.empty()){
+	output+=st.top();
+	st.pop();
+}
+return output;
+}
+
+
+
+
+int applyOp(int a, int b, char op)
+{
+    switch(op)
+    {
+        case '+': return a + b;
+        case '-': return a - b;
+        case '*': return a * b;
+        case '/': return a / b;
+    }
+    return 0;
+}
+int evaluatePostfix(string postfix){
+	stack<int> st;
+	for (int i=0;i<postfix.length();i++){
+		char c=postfix[i];
+		
+		if (isdigit(c))
+		st.push(c-'0');
+		else {
+			int b=st.top();st.pop();
+			int a=st.top();st.pop();
+			int ans=applyOp(b,a,c);5
+			st.push(ans);
+		}
+	
+	}
+	return st.top();
+}
+
+int main(){
+	string postfix;
+	cin>>postfix;
+	cout<<evaluatePostfix(postfix);
+	
+}
